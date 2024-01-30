@@ -24,9 +24,9 @@ public class ContratoController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> saveContrato(@RequestBody @Valid ContratoDto contratoDto){
+    public ResponseEntity<Object> saveContrato(@RequestBody @Valid ContratoDto contratoDto) {
 
-        if(contratoService.existsByNumeroContrato(contratoDto.getNumeroContrato())){
+        if (contratoService.existsByNumeroContrato(contratoDto.getNumeroContrato())) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Contrato já cadastrado no sistema.");
         }
 
@@ -36,12 +36,12 @@ public class ContratoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Contrato>> getTodosContratos(){
+    public ResponseEntity<List<Contrato>> getTodosContratos() {
         return ResponseEntity.status(HttpStatus.OK).body(contratoService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getApenasUmContrato(@PathVariable(value = "id") Integer numeroContrato){
+    public ResponseEntity<Object> getApenasUmContrato(@PathVariable(value = "id") Integer numeroContrato) {
         Optional<Contrato> contratoOptional = contratoService.findById(numeroContrato);
         if (!contratoOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Contrato não encontrado, manobrown.");
@@ -50,7 +50,7 @@ public class ContratoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteCliente(@PathVariable(value = "id") Integer numeroContrato){
+    public ResponseEntity<Object> deleteCliente(@PathVariable(value = "id") Integer numeroContrato) {
         Optional<Contrato> contratoOptional = contratoService.findById(numeroContrato);
         if (!contratoOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Contrato não encontrado.");
@@ -58,18 +58,19 @@ public class ContratoController {
         contratoService.delete(contratoOptional.get());
         return ResponseEntity.status(HttpStatus.OK).body("Contrato deletado com sucesso.");
     }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> updateCliente(@PathVariable(value = "id") Integer numeroContrato,
-                                                @RequestBody @Valid ContratoDto contratoDto){
-        Optional<Contrato> contratoOptional = contratoService.findById(numeroContrato);
-        if (!contratoOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Contrato não encontrado.");
-        }
-        var contrato = new Contrato();
-        BeanUtils.copyProperties(contratoDto, contrato);
-        contrato.setNumeroContrato(contratoOptional.get().getNumeroContrato());
-        return ResponseEntity.status(HttpStatus.OK).body(contratoService.save(contrato));
-    }
-
 }
+
+//    @PutMapping("/{id}")
+//    public ResponseEntity<Object> updateCliente(@PathVariable(value = "id") Integer numeroContrato,
+//                                                @RequestBody @Valid ContratoDto contratoDto){
+//        Optional<Contrato> contratoOptional = contratoService.findById(numeroContrato);
+//        if (!contratoOptional.isPresent()) {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Contrato não encontrado.");
+//        }
+//        var contrato = new Contrato();
+//        BeanUtils.copyProperties(contratoDto, contrato);
+//        contrato.setNumeroContrato(contratoOptional.get().getNumeroContrato());
+//        return ResponseEntity.status(HttpStatus.OK).body(contratoService.save(contrato));
+//    }
+//
+//}

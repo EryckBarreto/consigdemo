@@ -59,17 +59,17 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.OK).body("Usuário deletado com sucesso.");
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> updateUsuario(@PathVariable(value = "id") Integer id,
-                                                @RequestBody @Valid UsuarioDto usuarioDto){
-        Optional<Usuario> usuarioOptional = usuarioService.findById(id);
-        if (!usuarioOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado.");
-        }
-        var usuario = new Usuario();
-        BeanUtils.copyProperties(usuarioDto, usuario);
-        usuario.setId(usuarioOptional.get().getId());
-        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.save(usuario));
-    }
+//    @PutMapping("/{id}")
+//    public ResponseEntity<Object> updateUsuario(@PathVariable(value = "id") Integer id,
+//                                                @RequestBody @Valid UsuarioDto usuarioDto){
+//        Optional<Usuario> usuarioOptional = usuarioService.findById(id);
+//        if (!usuarioOptional.isPresent()) {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado.");
+//        }
+//        var usuario = new Usuario();
+//        BeanUtils.copyProperties(usuarioDto, usuario);
+//        usuario.setId(usuarioOptional.get().getId());
+//        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.save(usuario));
+//    }
 
 }
